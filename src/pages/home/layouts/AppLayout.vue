@@ -9,17 +9,13 @@
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem class="hidden block">
-              <BreadcrumbLink href="/">Traffic Alerts</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator class="hidden block" />
-            <BreadcrumbItem>
-              <BreadcrumbPage>{{ route.name || route.path }}</BreadcrumbPage>
+              <BreadcrumbLink href="/">Traffic Alerts Dashboard</BreadcrumbLink>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
       </header>
 
-      <main class="flex-1 overflow-y-auto p-4">
+      <main>
         <router-view />
       </main>
     </SidebarInset>
@@ -27,15 +23,12 @@
 </template>
 
 <script setup lang="ts">
-import { useRoute } from 'vue-router'
 import AppSidebar from "../components/AppSidebar.vue"
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { Separator } from "@/components/ui/separator"
 import {
@@ -44,5 +37,4 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar"
 
-const route = useRoute()
 </script>

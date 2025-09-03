@@ -5,11 +5,11 @@ export const iframeHeight = "800px"
 </script>
 
 <script setup lang="ts">
-import HomeContent from "./components/HomeContent.vue";
+import AppLayout from "./layouts/AppLayout.vue";
 </script>
 
 <template>
   <div class="flex h-svh items-center justify-center">
-    <HomeContent />
+    <AppLayout />
   </div>
 </template>

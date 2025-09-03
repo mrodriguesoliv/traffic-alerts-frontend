@@ -22,15 +22,8 @@ const data = {
   navMain: [
     {
       title: "Traffic Alerts",
+
       items: [
-        {
-          title: "Notification",
-          url: "/notification",
-        },
-        {
-          title: "Navigation",
-          url: "/navigation",
-        }
       ],
     },
   ],
