@@ -16,7 +16,7 @@
       </header>
 
       <main>
-        <router-view />
+        <router-view/>
       </main>
     </SidebarInset>
   </SidebarProvider>

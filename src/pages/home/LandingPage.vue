@@ -9,7 +9,7 @@ import AppLayout from "./layouts/AppLayout.vue";
 </script>
 
 <template>
-  <div class="flex h-svh items-center justify-center">
+  <div class="flex h-svh items-center justify-center overflow-hidden">
     <AppLayout />
   </div>
 </template>
