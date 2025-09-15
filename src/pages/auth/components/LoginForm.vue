@@ -1,58 +1,79 @@
 <script setup lang="ts">
-import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { ref } from "vue";
+import router from "@/router";
+import { login } from "@/services/apiService";
+import { useAuthStore } from "@/stores/authStore";
+
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
+const authStore = useAuthStore();
+
+const email = ref("");
+const password = ref("");
+const loading = ref(false);
+const errorMsg = ref("");
+
+const handleLogin = async () => {
+  errorMsg.value = "";
+  if (!email.value || !password.value) {
+    errorMsg.value = "Preencha email e senha";
+    return;
+  }
+
+  loading.value = true;
+  try {
+    const data = await login(email.value, password.value);
+
+    if (data?.token) {
+      authStore.setUser(email.value, data.token);
+      router.push("/dashboard");
+    } else {
+      errorMsg.value = "Usuário ou senha inválidos";
+    }
+  } catch (err) {
+    console.error(err);
+    errorMsg.value = "Erro ao conectar com o servidor";
+  } finally {
+    loading.value = false;
+  }
+};
 </script>
 
 <template>
-  <Card class="mx-auto max-w-sm">
+  <Card class="mx-auto max-w-sm mt-12">
     <CardHeader>
-      <CardTitle class="text-2xl">
-        Login
-      </CardTitle>
-      <CardDescription>
-        Enter your email below to login to your account
-      </CardDescription>
+      <CardTitle class="text-2xl">Login</CardTitle>
+      <CardDescription>Entre com seu email e senha</CardDescription>
     </CardHeader>
     <CardContent>
-      <div class="grid gap-4">
+      <form class="grid gap-4" @submit.prevent="handleLogin">
         <div class="grid gap-2">
           <Label for="email">Email</Label>
-          <Input
-            id="email"
-            type="email"
-            placeholder="m@example.com"
-            required
-          />
+          <Input id="email" type="email" placeholder="m@example.com" required v-model="email" />
         </div>
+
         <div class="grid gap-2">
           <div class="flex items-center">
-            <Label for="password">Password</Label>
-            <a href="#" class="ml-auto inline-block text-sm underline">
-              Forgot your password?
-            </a>
+            <Label for="password">Senha</Label>
+            <a href="#" class="ml-auto text-sm underline">Esqueceu a senha?</a>
           </div>
-          <Input id="password" type="password" required />
+          <Input id="password" type="password" required v-model="password" />
         </div>
-        <Button type="submit" class="w-full">
-          Login
+
+        <Button type="submit" class="w-full" :disabled="loading">
+          <span v-if="loading">Entrando...</span>
+          <span v-else>Login</span>
         </Button>
-        <Button variant="outline" class="w-full">
-          Login with Google
-        </Button>
-      </div>
+
+        <p v-if="errorMsg" class="text-red-500 text-sm mt-2">{{ errorMsg }}</p>
+      </form>
+
       <div class="mt-4 text-center text-sm">
-        Don't have an account?
-        <a href="#" class="underline">
-          Sign up
-        </a>
+        Não tem uma conta?
+        <a href="#" class="underline">Cadastre-se</a>
       </div>
     </CardContent>
   </Card>

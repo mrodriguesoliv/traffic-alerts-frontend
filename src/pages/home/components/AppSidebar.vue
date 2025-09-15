@@ -1,55 +1,96 @@
-// src/pages/home/components/AppSidebar.vue
+//src/pages/home/components/AppSidebar.vue
 <script setup lang="ts">
-import type { SidebarProps } from "@/components/ui/sidebar"
-
+import { useRouter } from "vue-router";
+import { Calendar, Home, Inbox, Search, Settings, User2, ChevronUp } from "lucide-vue-next";
 import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
-  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarFooter
+} from "@/components/ui/sidebar";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem
+} from "@/components/ui/dropdown-menu";
+import { useAuthStore } from '@/stores/authStore';
 
-  SidebarRail,
-} from "@/components/ui/sidebar"
 
-const props = defineProps<SidebarProps>()
+const router = useRouter();
 
-const data = {
-  navMain: [
-    {
-      title: "Traffic Alerts",
+const authStore = useAuthStore();
 
-      items: [
-      ],
-    },
-  ],
-}
+const handleLogout = () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("userEmail");
+  router.push("/auth");
+};
+
+const items = [
+  { title: "Home", url: "#", icon: Home },
+  { title: "Inbox", url: "#", icon: Inbox },
+  { title: "Calendar", url: "#", icon: Calendar },
+  { title: "Search", url: "#", icon: Search },
+  { title: "Settings", url: "#", icon: Settings },
+];
 </script>
 
 <template>
-  <Sidebar v-bind="props">
-    <SidebarHeader class="flex flex-row items-center gap-2 mt-4 mb-4 px-4">
-        <img src="/waze1.svg" alt="Logo" class="h-8 w-8"/> 
-        <h2 class="text-lg font-semibold">Traffic Alerts</h2>
-    </SidebarHeader>
+  <Sidebar>
+    <div class="h-14 px-4 py-3 border-b border-border flex items-center gap-2">
+      <img src="/waze1.svg" alt="Logo" class="h-6 w-6" />
+      <span class="text-lg font-bold uppercase">TRAFFIC ALERTS API</span>
+    </div>
+
+
     <SidebarContent>
-      <SidebarGroup v-for="item in data.navMain" :key="item.title">
-        <SidebarGroupLabel>{{ item.title }}</SidebarGroupLabel>
+      <SidebarGroup>
+        <SidebarGroupLabel>Application</SidebarGroupLabel>
         <SidebarGroupContent>
           <SidebarMenu>
-            <SidebarMenuItem v-for="childItem in item.items" :key="childItem.title">
-              <SidebarMenuButton as-child :is-active="childItem.isActive">
-                <a :href="childItem.url">{{ childItem.title }}</a>
+            <SidebarMenuItem v-for="item in items" :key="item.title">
+              <SidebarMenuButton asChild>
+                <a :href="item.url" class="flex items-center gap-2">
+                  <component :is="item.icon" />
+                  <span>{{ item.title }}</span>
+                </a>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarGroupContent>
       </SidebarGroup>
     </SidebarContent>
-    <SidebarRail />
+
+    <SidebarFooter>
+      <SidebarMenu>
+        <SidebarMenuItem>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <SidebarMenuButton class="flex items-center gap-2">
+                <User2 class="mr-2" /> {{ authStore.userEmail || "Usuário" }}
+                <ChevronUp class="ml-auto" />
+              </SidebarMenuButton>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent side="top" class="w-[--reka-popper-anchor-width]">
+              <DropdownMenuItem>
+                <span>Account</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <span>Billing</span>
+              </DropdownMenuItem>
+              <DropdownMenuItem @click="handleLogout">
+                <span>Sign out</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </SidebarMenuItem>
+      </SidebarMenu>
+    </SidebarFooter>
   </Sidebar>
 </template>
