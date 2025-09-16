@@ -12,7 +12,7 @@
           v-for="alert in alerts"
           :key="alert.id"
           :class="[
-            'p-4 hover:shadow-lg transition-shadow duration-200 cursor-pointer',
+            'p-4 hover:shadow-lg transition-shadow duration-200 cursor-pointer border-0',
             getAlertBorderClass(alert.type)
           ]"
         >
