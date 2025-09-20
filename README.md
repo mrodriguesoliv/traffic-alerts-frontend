@@ -4,7 +4,7 @@ Uma interface moderna e reativa para visualização de alertas de tráfego em te
 
 ![Vue.js](https://img.shields.io/badge/Vue.js-3-4FC08D?style=for-the-badge&logo=vue.js)![Vite](https://img.shields.io/badge/Vite-5-646CFF?style=for-the-badge&logo=vite)![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript)![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3-38B2AC?style=for-the-badge&logo=tailwind-css)
 
-![Demonstração da Aplicação](<!-- cole aqui um link para um screenshot ou GIF da sua aplicação -->)
+![Demonstração da Aplicação](.github/assets/traffic-alerts-frontend.png)
 *<p align="center">Tela principal do dashboard, exibindo o mapa interativo e a lista de alertas.</p>*
 
 ## ✨ Funcionalidades
