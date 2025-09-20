@@ -43,9 +43,9 @@ const handleLogin = async () => {
 </script>
 
 <template>
-  <Card class="mx-auto max-w-sm mt-12">
+  <Card class="mx-auto max-w-sm mt-[50vh] transform -translate-y-1/2">
     <CardHeader>
-      <CardTitle class="text-2xl">Login</CardTitle>
+      <CardTitle class="text-2xl">Sign In</CardTitle>
       <CardDescription>Entre com seu email e senha</CardDescription>
     </CardHeader>
     <CardContent>
@@ -58,7 +58,6 @@ const handleLogin = async () => {
         <div class="grid gap-2">
           <div class="flex items-center">
             <Label for="password">Senha</Label>
-            <a href="#" class="ml-auto text-sm underline">Esqueceu a senha?</a>
           </div>
           <Input id="password" type="password" required v-model="password" />
         </div>
@@ -73,7 +72,7 @@ const handleLogin = async () => {
 
       <div class="mt-4 text-center text-sm">
         Não tem uma conta?
-        <a href="#" class="underline">Cadastre-se</a>
+        <RouterLink to="/auth/signin" class="font-bold">Cadastre-se</RouterLink>
       </div>
     </CardContent>
   </Card>

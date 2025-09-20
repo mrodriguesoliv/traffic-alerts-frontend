@@ -29,7 +29,7 @@ const authStore = useAuthStore();
 const handleLogout = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("userEmail");
-  router.push("/auth");
+  router.push("/auth/signin");
 };
 
 const items = [

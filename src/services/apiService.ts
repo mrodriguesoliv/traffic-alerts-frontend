@@ -1,5 +1,4 @@
-import axios from 'axios';
-
+import apiClient from './apiClient';
 interface TrafficAlert {
   id: string;
   title: string;
@@ -7,38 +6,22 @@ interface TrafficAlert {
   timestamp: string;
 }
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-
 export const fetchTrafficAlerts = async (): Promise<TrafficAlert[]> => {
   try {
-    const token = localStorage.getItem('token');
-    const response = await axios.get(`${API_BASE_URL}/dashboard`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await apiClient.get('/dashboard');
     return response.data;
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.error('Erro ao buscar alertas de tráfego:', error.message);
-    } else {
-      console.error('Erro desconhecido:', error);
-    }
-    return [];
+    console.error('Erro ao buscar alertas de tráfego:', error);
+    throw error;
   }
 };
 
-
 export const login = async (email: string, password: string): Promise<{ token: string } | null> => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/auth`, { email, password });
+    const response = await apiClient.post('/auth', { email, password });
     return response.data;
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.error('Erro ao fazer login:', error.message);
-    } else {
-      console.error('Erro desconhecido:', error);
-    }
-    return null;
+    console.error('Erro ao fazer login:', error);
+    throw error;
   }
 };

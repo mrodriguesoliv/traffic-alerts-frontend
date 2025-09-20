@@ -10,20 +10,13 @@
 import { ref, onMounted, watch, onBeforeUnmount } from 'vue';
 import L from 'leaflet';
 import { Card, CardContent } from '@/components/ui/card';
-
-interface Alert {
-  id: string;
-  type: string;
-  description: string;
-  location: { latitude: number; longitude: number };
-  time: number;
-}
+import { type Alert } from '@/types';
 
 const props = defineProps<{ alerts: Alert[] }>();
 
 const mapContainer = ref<HTMLDivElement | null>(null);
-let map: L.Map;
-let resizeObserver: ResizeObserver;
+let map: L.Map | null = null;
+let resizeObserver: ResizeObserver | null = null;
 
 onMounted(() => {
   if (!mapContainer.value) return;
@@ -35,7 +28,9 @@ onMounted(() => {
   }).addTo(map);
 
   resizeObserver = new ResizeObserver(() => {
-    map.invalidateSize();
+    if (map) {
+      map.invalidateSize();
+    }
   });
   resizeObserver.observe(mapContainer.value);
 });
@@ -44,7 +39,9 @@ onBeforeUnmount(() => {
   if (resizeObserver && mapContainer.value) {
     resizeObserver.unobserve(mapContainer.value);
   }
-  if (map) map.remove();
+  if (map) {
+    map.remove();
+  }
 });
 
 watch(
@@ -53,13 +50,15 @@ watch(
     if (!map) return;
 
     map.eachLayer((layer) => {
-      if (layer instanceof L.Marker) layer.remove();
+      if (layer instanceof L.Marker) {
+        layer.remove();
+      }
     });
 
     const markers = newAlerts.map(alert =>
       L.marker([alert.location.latitude, alert.location.longitude])
         .bindPopup(`<b>${alert.type}</b><br>${alert.description}`)
-        .addTo(map)
+        .addTo(map!)
     );
 
     if (markers.length) {

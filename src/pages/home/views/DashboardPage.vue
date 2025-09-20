@@ -3,9 +3,9 @@
 
   <Separator class="my-4" />
 
-  <p v-if="loading" class="text-gray-500">Carregando alertas!</p>
+  <p v-if="loading" class="text-gray-500 text-center">Carregando alertas!</p>
 
-  <div v-if="alerts.length" class="grid m-4 gap-4">
+  <div v-else-if="alerts.length" class="grid m-4 gap-4">
     <ScrollArea class="h-69">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <Card
@@ -33,11 +33,11 @@
         </Card>
       </div>
     </ScrollArea>
-
-    <p v-if="!alerts.length && !loading" class="text-gray-500 mt-4 text-center">
-      Nenhum alerta de tráfego no momento.
-    </p>
   </div>
+  
+  <p v-else class="text-gray-500 mt-4 text-center">
+    Nenhum alerta de tráfego no momento.
+  </p>
 </template>
 
 <script setup lang="ts">
@@ -48,12 +48,13 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import Separator from '@/components/ui/separator/Separator.vue';
 import { getAlertIcon, getAlertBorderClass } from '@/utils/alerts/icons/getAlertStyle';
 import TrafficMap from '../components/TrafficMap.vue';
+import { type Alert } from '@/types';
 
-const alerts = ref([]);
+const alerts = ref<Alert[]>([]);
 const loading = ref(true);
-let intervalId = null;
+let intervalId: number | null = null;
  
-const formatTimestamp = (ts) => new Date(ts).toLocaleString();
+const formatTimestamp = (ts: number): string => new Date(ts).toLocaleString();
 
 const fetchAlerts = async () => {
   loading.value = true;
@@ -77,3 +78,4 @@ onBeforeUnmount(() => {
   if (intervalId) clearInterval(intervalId);
 });
 </script>
+
