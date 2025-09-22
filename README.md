@@ -2,6 +2,9 @@
 
 Uma interface moderna e reativa para visualização de alertas de tráfego em tempo real, construída com as mais recentes tecnologias do ecossistema Vue.js.
 
+Para garantir a precisão e a atualidade dos alertas, o dashboard utiliza a API do Waze for Cities. Isso permite o acesso direto a dados de tráfego gerados pela comunidade,
+incluindo informações sobre acidentes, congestionamentos, perigos na via e outras ocorrências relevantes, assegurando que os usuários tenham sempre a visão mais recente das condições de trânsito.
+
 ![Vue.js](https://img.shields.io/badge/Vue.js-3-4FC08D?style=for-the-badge&logo=vue.js)![Vite](https://img.shields.io/badge/Vite-5-646CFF?style=for-the-badge&logo=vite)![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript)![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3-38B2AC?style=for-the-badge&logo=tailwind-css)
 
 ![Demonstração da Aplicação](.github/assets/traffic-alerts-frontend.png)
@@ -12,6 +15,7 @@ Uma interface moderna e reativa para visualização de alertas de tráfego em te
 -   **Dashboard Interativo**: Visualize todos os alertas de tráfego em um painel centralizado e de fácil leitura.
 -   **Mapa em Tempo Real**: Um mapa (Leaflet) que exibe a localização exata de cada alerta, com zoom automático para abranger todos os pontos.
 -   **Atualização Automática**: A lista de alertas é atualizada automaticamente a cada 60 segundos, garantindo que você tenha sempre as informações mais recentes.
+-   **Dados Autênticos com a API do Waze**: Os alertas de tráfego são consultados diretamente da API do Waze, garantindo informações em tempo real e de alta confiabilidade.
 -   **Design Responsivo**: Interface totalmente adaptável para desktops, tablets e dispositivos móveis, com um sidebar colapsável.
 -   **Autenticação Segura**: Sistema de login para acesso exclusivo ao dashboard.
 -   **Tipagem Forte com TypeScript**: Todo o projeto é desenvolvido com TypeScript para garantir robustez, manutenibilidade e uma melhor experiência de desenvolvimento.
